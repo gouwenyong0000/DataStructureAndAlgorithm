@@ -1,5 +1,7 @@
 package data.structures._3_linkedlist;
 
+import java.time.temporal.Temporal;
+
 public class SingleLinkedListDemo {
     public static void main(String[] args) {
         HeroNode hero1 = new HeroNode(1, "宋江", "及时雨");
@@ -8,11 +10,6 @@ public class SingleLinkedListDemo {
         HeroNode hero4 = new HeroNode(4, "林冲", "豹子头");
 
         SingleLinkedList list = new SingleLinkedList();
-        // list.add(hero1);
-        // list.add(hero4);
-        // list.add(hero3);
-        // list.add(hero2);
-        // list.add(hero3);  xxx，这里不可以插入重复节点，否则会造成链表节点间循环
 
         list.addByOrder(hero3);
         list.addByOrder(hero4);
@@ -21,7 +18,13 @@ public class SingleLinkedListDemo {
         // list.addByOrder(hero4);
 
         list.list();
+
+        System.out.println("size = " + list.size());
     }
+
+
+
+
 }
 
 //定义HeroNode ， 每个HeroNode 对象就是一个节点
@@ -163,4 +166,19 @@ class SingleLinkedList {
             temp = temp.next;
         }
     }
+
+    // 单链表中有效节点的个数
+    public int size() {
+        HeroNode curNode = head.next;
+        int count = 0;
+        while (true) {
+            if (curNode == null) {
+                break;
+            }
+            count++;
+            curNode = curNode.next;
+        }
+        return count;
+    }
+
 }
