@@ -1,32 +1,85 @@
 package data.structures._3_linkedlist;
 
-import java.time.temporal.Temporal;
 import java.util.Stack;
 
 public class SingleLinkedListDemo {
     public static void main(String[] args) {
-        HeroNode hero1 = new HeroNode(1, "宋江", "及时雨");
-        HeroNode hero2 = new HeroNode(2, "卢俊义", "玉麒麟");
-        HeroNode hero3 = new HeroNode(3, "吴用", "智多星");
-        HeroNode hero4 = new HeroNode(4, "林冲", "豹子头");
+        HeroNode hero1 = new HeroNode(10, "宋江", "及时雨");
+        HeroNode hero2 = new HeroNode(20, "卢俊义", "玉麒麟");
+        HeroNode hero3 = new HeroNode(30, "吴用", "智多星");
+        HeroNode hero4 = new HeroNode(40, "林冲", "豹子头");
 
         SingleLinkedList list = new SingleLinkedList();
 
-        list.addByOrder(hero3);
-        list.addByOrder(hero4);
-        list.addByOrder(hero1);
-        list.addByOrder(hero2);
-        // list.addByOrder(hero4);
+        list.add(hero1);
+        list.add(hero2);
+        list.add(hero3);
+        list.add(hero4);
 
-        list.list();
-        System.out.println("size = " + list.size());
-        HeroNode lastIndexNode = list.findLastIndexNode(2);
-        System.out.println("lastIndexNode = " + lastIndexNode);
+        HeroNode hero11 = new HeroNode(11, "宋江", "及时雨");
+        HeroNode hero21 = new HeroNode(22, "卢俊义", "玉麒麟");
+        HeroNode hero31 = new HeroNode(23, "吴用", "智多星");
+        HeroNode hero41 = new HeroNode(34, "林冲", "豹子头");
+
+        SingleLinkedList list1 = new SingleLinkedList();
+        list1.add(hero11);
+        list1.add(hero21);
+        list1.add(hero31);
+        list1.add(hero41);
+
+        SingleLinkedList singleLinkedList = mergerLinkedList(list1, list);
+        singleLinkedList.list();
+
+//        list.addByOrder(hero3);
+//        list.addByOrder(hero4);
+//        list.addByOrder(hero1);
+//        list.addByOrder(hero2);
+//        // list.addByOrder(hero4);
+//
+//        list.list();
+//        System.out.println("size = " + list.size());
+//        HeroNode lastIndexNode = list.findLastIndexNode(2);
+//        System.out.println("lastIndexNode = " + lastIndexNode);
+//
+//
+//        list.reversetList();
+//        list.list();
 
 
-        list.reversetList();
-        list.list();
 
+
+    }
+
+    public static SingleLinkedList mergerLinkedList(SingleLinkedList list1, SingleLinkedList list2) {
+        SingleLinkedList res = new SingleLinkedList();
+        HeroNode l1 = list1.getHead().next;
+        HeroNode l2 = list2.getHead().next;
+
+        while (true) {
+            if (l1 == null || l2 == null) {
+                break;
+            }
+            if (l1.no < l2.no) {
+                HeroNode next = l1.next;
+                l1.next = null;//下一个节点置空
+                res.add(l1);//插入未部
+                l1 = next;
+            } else {
+                HeroNode next = l2.next;
+                l2.next = null;
+                res.add(l2);
+                l2 = next;
+            }
+        }
+
+        //判断两个是否合并完毕
+        if (l1 == null) {
+            res.add(l2);
+        } else {
+            res.add(l1);
+        }
+
+        return res;
     }
 
 
