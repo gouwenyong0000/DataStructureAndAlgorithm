@@ -18,12 +18,40 @@ public class SingleLinkedListDemo {
         // list.addByOrder(hero4);
 
         list.list();
-
         System.out.println("size = " + list.size());
+        HeroNode lastIndexNode = list.findLastIndexNode(2);
+        System.out.println("lastIndexNode = " + lastIndexNode);
+
+
+
+
     }
 
 
 
+    public static HeroNode reserver(SingleLinkedList root) {
+
+        HeroNode newNode = new HeroNode(0, null, null);
+
+        HeroNode next = root.getHead().next;//第一个元素
+
+        while (true) {
+
+            if (next == null) {
+                break;
+            }
+
+            HeroNode noResver = next.next;//保存为排序部分
+
+            next.next = newNode.next;//插入到头部
+            newNode.next = next;
+
+            next = noResver;//指向未排序头部
+
+        }
+
+        return newNode;
+    }
 
 }
 
@@ -180,5 +208,34 @@ class SingleLinkedList {
         }
         return count;
     }
+
+    //查找单链表中的倒数第k个结点 【新浪面试题】
+    //思路
+    //1. 编写一个方法，接收head节点，同时接收一个index
+    //2. index 表示是倒数第index个节点
+    //3. 先把链表从头到尾遍历，得到链表的总的长度 getLength
+    //4. 得到size 后，我们从链表的第一个开始遍历 (size-index)个，就可以得到
+    //5. 如果找到了，则返回该节点，否则返回nulll
+    public  HeroNode findLastIndexNode( int index) {
+        //判断如果链表为空，返回null
+        if (head.next == null) {
+            return null;//没有找到
+        }
+        //第一个遍历得到链表的长度(节点个数)
+        int size = size();
+        //第二次遍历  size-index 位置，就是我们倒数的第K个节点
+        //先做一个index的校验
+        if (index <= 0 || index > size) {
+            return null;
+        }
+        //定义给辅助变量， for 循环定位到倒数的index
+        HeroNode cur = head.next; //3 // 3 - 1 = 2
+        for (int i = 0; i < size - index; i++) {
+            cur = cur.next;
+        }
+        return cur;
+
+    }
+
 
 }
