@@ -18,12 +18,30 @@ public class BinaryTreeTest {
         node3.setLeft(node5);
         binaryTree.setRoot(root);
 
-        System.out.println("\n 前序遍历：");
-        binaryTree.preOrder();
-        System.out.println("\n 中序遍历：");
-        binaryTree.infixOrder();
-        System.out.println("\n 后序遍历：");
-        binaryTree.postOrder();
+//        System.out.println("\n 前序遍历：");
+//        binaryTree.preOrder();
+//        System.out.println("\n 中序遍历：");
+//        binaryTree.infixOrder();
+//        System.out.println("\n 后序遍历：");
+//        binaryTree.postOrder();
+
+        System.out.println("找到测试：");
+        int id = 5;
+        System.out.println("\n前序遍历查找 id=" + id);
+        System.out.println(binaryTree.preOrderSearch(id));
+        System.out.println("\n中序遍历查找 id=" + id);
+        System.out.println(binaryTree.infixOrderSearch(id));
+        System.out.println("\n后序遍历查找 id=" + id);
+        System.out.println(binaryTree.postOrderSearch(id));
+
+        System.out.println("找不到测试：");
+        id = 15;
+        System.out.println("\n前序遍历查找 id=" + id);
+        System.out.println(binaryTree.preOrderSearch(id));
+        System.out.println("\n中序遍历查找 id=" + id);
+        System.out.println(binaryTree.infixOrderSearch(id));
+        System.out.println("\n后序遍历查找 id=" + id);
+        System.out.println(binaryTree.postOrderSearch(id));
 
 
     }
@@ -63,6 +81,39 @@ class BinaryTree {
         } else {
             System.out.println("二叉树为空，无法遍历");
         }
+    }
+
+    /**
+     * 前序查找
+     */
+    public HeroNode preOrderSearch(int id) {
+        if (root == null) {
+            System.out.println("二叉树为空");
+            return null;
+        }
+        return root.preOrderSearch(id);
+    }
+
+    /**
+     * 中序查找
+     */
+    public HeroNode infixOrderSearch(int id) {
+        if (root == null) {
+            System.out.println("二叉树为空");
+            return null;
+        }
+        return root.infixOrderSearch(id);
+    }
+
+    /**
+     * 后序查找
+     */
+    public HeroNode postOrderSearch(int id) {
+        if (root == null) {
+            System.out.println("二叉树为空");
+            return null;
+        }
+        return root.postOrderSearch(id);
     }
 
 }
@@ -153,6 +204,85 @@ class HeroNode {
             this.right.postOrder();
         }
         System.out.println(this);
+    }
+
+
+    /**
+     * 前序遍历查找
+     * @param no 查找no
+     * @return 如果找到就返回该Node ,如果没有找到返回 null
+     */
+    public HeroNode preOrderSearch(int no) {
+        System.out.println("进入前序遍历");
+        //比较当前结点是不是
+        if (this.no == no) {
+            return this;
+        }
+        //1.则判断当前结点的左子节点是否为空，如果不为空，则递归前序查找
+        //2.如果左递归前序查找，找到结点，则返回
+        HeroNode resNode = null;
+        if (this.left != null) {
+            resNode = this.left.preOrderSearch(no);
+        }
+        if (resNode != null) {//说明我们左子树找到
+            return resNode;
+        }
+        //1.左递归前序查找，找到结点，则返回，否继续判断，
+        //2.当前的结点的右子节点是否为空，如果不空，则继续向右递归前序查找
+        if (this.right != null) {
+            resNode = this.right.preOrderSearch(no);
+        }
+        return resNode;
+    }
+
+    //中序遍历查找
+    public HeroNode infixOrderSearch(int no) {
+        //判断当前结点的左子节点是否为空，如果不为空，则递归中序查找
+        HeroNode resNode = null;
+        if (this.left != null) {
+            resNode = this.left.infixOrderSearch(no);
+        }
+        if (resNode != null) {
+            return resNode;
+        }
+        System.out.println("进入中序查找");
+        //如果找到，则返回，如果没有找到，就和当前结点比较，如果是则返回当前结点
+        if (this.no == no) {
+            return this;
+        }
+        //否则继续进行右递归的中序查找
+        if (this.right != null) {
+            resNode = this.right.infixOrderSearch(no);
+        }
+        return resNode;
+
+    }
+
+    //后序遍历查找
+    public HeroNode postOrderSearch(int no) {
+
+        //判断当前结点的左子节点是否为空，如果不为空，则递归后序查找
+        HeroNode resNode = null;
+        if (this.left != null) {
+            resNode = this.left.postOrderSearch(no);
+        }
+        if (resNode != null) {//说明在左子树找到
+            return resNode;
+        }
+
+        //如果左子树没有找到，则向右子树递归进行后序遍历查找
+        if (this.right != null) {
+            resNode = this.right.postOrderSearch(no);
+        }
+        if (resNode != null) {
+            return resNode;
+        }
+        System.out.println("进入后序查找");
+        //如果左右子树都没有找到，就比较当前结点是不是
+        if (this.no == no) {
+            return this;
+        }
+        return resNode;
     }
 
 }
