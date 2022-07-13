@@ -17,7 +17,7 @@ public class BinaryTreeTest {
         node3.setRight(node4);
         node3.setLeft(node5);
         binaryTree.setRoot(root);
-
+//测试遍历
 //        System.out.println("\n 前序遍历：");
 //        binaryTree.preOrder();
 //        System.out.println("\n 中序遍历：");
@@ -25,23 +25,30 @@ public class BinaryTreeTest {
 //        System.out.println("\n 后序遍历：");
 //        binaryTree.postOrder();
 
-        System.out.println("找到测试：");
-        int id = 5;
-        System.out.println("\n前序遍历查找 id=" + id);
-        System.out.println(binaryTree.preOrderSearch(id));
-        System.out.println("\n中序遍历查找 id=" + id);
-        System.out.println(binaryTree.infixOrderSearch(id));
-        System.out.println("\n后序遍历查找 id=" + id);
-        System.out.println(binaryTree.postOrderSearch(id));
+//测试查找
+//        System.out.println("找到测试：");
+//        int id = 5;
+//        System.out.println("\n前序遍历查找 id=" + id);
+//        System.out.println(binaryTree.preOrderSearch(id));
+//        System.out.println("\n中序遍历查找 id=" + id);
+//        System.out.println(binaryTree.infixOrderSearch(id));
+//        System.out.println("\n后序遍历查找 id=" + id);
+//        System.out.println(binaryTree.postOrderSearch(id));
+//
+//        System.out.println("找不到测试：");
+//        id = 15;
+//        System.out.println("\n前序遍历查找 id=" + id);
+//        System.out.println(binaryTree.preOrderSearch(id));
+//        System.out.println("\n中序遍历查找 id=" + id);
+//        System.out.println(binaryTree.infixOrderSearch(id));
+//        System.out.println("\n后序遍历查找 id=" + id);
+//        System.out.println(binaryTree.postOrderSearch(id));
 
-        System.out.println("找不到测试：");
-        id = 15;
-        System.out.println("\n前序遍历查找 id=" + id);
-        System.out.println(binaryTree.preOrderSearch(id));
-        System.out.println("\n中序遍历查找 id=" + id);
-        System.out.println(binaryTree.infixOrderSearch(id));
-        System.out.println("\n后序遍历查找 id=" + id);
-        System.out.println(binaryTree.postOrderSearch(id));
+        //测试删除
+//        binaryTree.delete(3);
+//        binaryTree.preOrder();
+        binaryTree.delete(5);
+        binaryTree.preOrder();
 
 
     }
@@ -115,6 +122,28 @@ class BinaryTree {
         }
         return root.postOrderSearch(id);
     }
+    // BinaryTree 新增删除方法
+
+    /**
+     * 删除节点
+     */
+    public HeroNode delete(int id) {
+        if (root == null) {
+            System.out.println("树为空");
+            return null;
+        }
+        HeroNode target = null;
+        // 如果 root 节点就是要删除的节点，则直接置空
+        if (root.getNo() == id) {
+            target = root;
+            root = null;
+        } else {
+            target = this.root.delete(id);
+        }
+
+        return target;
+    }
+
 
 }
 
@@ -209,6 +238,7 @@ class HeroNode {
 
     /**
      * 前序遍历查找
+     *
      * @param no 查找no
      * @return 如果找到就返回该Node ,如果没有找到返回 null
      */
@@ -284,5 +314,78 @@ class HeroNode {
         }
         return resNode;
     }
+
+    /**
+     * 删除节点，老师的思路写法，先看左右，看完再递归
+     *
+     * @param id
+     * @return 如果删除成功，则返回删除的节点
+     */
+    public HeroNode delete(int id) {
+        // 判断左子节点是否是要删除的节点
+        HeroNode target = null;
+        if (this.left != null && this.left.no == id) {
+            target = this.left;
+            this.left = null;
+            return target;
+        }
+
+        if (this.right != null && this.right.no == id) {
+            target = this.right;
+            this.right = null;
+            return target;
+        }
+
+        // 尝试左递归
+        if (this.left != null) {
+            target = this.left.delete(id);
+            if (target != null) {
+                return target;
+            }
+        }
+
+        // 尝试右递归
+        if (this.right != null) {
+            target = this.right.delete(id);
+            if (target != null) {
+                return target;
+            }
+        }
+        return null;
+    }
+
+//    //递归删除结点
+//    //1.如果删除的节点是叶子节点，则删除该节点
+//    //2.如果删除的节点是非叶子节点，则删除该子树
+//    public void delNode(int no) {
+//
+//        //思路
+//		/*
+//		 * 	1. 因为我们的二叉树是单向的，所以我们是判断当前结点的子结点是否需要删除结点，而不能去判断当前这个结点是不是需要删除结点.
+//			2. 如果当前结点的左子结点不为空，并且左子结点 就是要删除结点，就将this.left = null; 并且就返回(结束递归删除)
+//			3. 如果当前结点的右子结点不为空，并且右子结点 就是要删除结点，就将this.right= null ;并且就返回(结束递归删除)
+//			4. 如果第2和第3步没有删除结点，那么我们就需要向左子树进行递归删除
+//			5.  如果第4步也没有删除结点，则应当向右子树进行递归删除.
+//
+//		 */
+//        //2. 如果当前结点的左子结点不为空，并且左子结点 就是要删除结点，就将this.left = null; 并且就返回(结束递归删除)
+//        if (this.left != null && this.left.no == no) {
+//            this.left = null;
+//            return;
+//        }
+//        //3.如果当前结点的右子结点不为空，并且右子结点 就是要删除结点，就将this.right= null ;并且就返回(结束递归删除)
+//        if (this.right != null && this.right.no == no) {
+//            this.right = null;
+//            return;
+//        }
+//        //4.我们就需要向左子树进行递归删除
+//        if (this.left != null) {
+//            this.left.delNode(no);
+//        }
+//        //5.则应当向右子树进行递归删除
+//        if (this.right != null) {
+//            this.right.delNode(no);
+//        }
+//    }
 
 }
