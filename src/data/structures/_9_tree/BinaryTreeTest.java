@@ -47,7 +47,10 @@ public class BinaryTreeTest {
         //测试删除
 //        binaryTree.delete(3);
 //        binaryTree.preOrder();
-        binaryTree.delete(5);
+//        binaryTree.delete(5);
+//        binaryTree.preOrder();
+
+        binaryTree.deleteByQuestion(3);
         binaryTree.preOrder();
 
 
@@ -139,6 +142,24 @@ class BinaryTree {
             root = null;
         } else {
             target = this.root.delete(id);
+        }
+
+        return target;
+
+    }
+
+    public HeroNode deleteByQuestion(int id) {
+        if (root == null) {
+            System.out.println("树为空");
+            return null;
+        }
+        HeroNode target = null;
+        // 如果 root 节点就是要删除的节点，则直接置空
+        if (root.getNo() == id) {
+            target = root;
+            root = null;
+        } else {
+            target = this.root.deleteByQuestion(id);
         }
 
         return target;
@@ -334,6 +355,64 @@ class HeroNode {
             target = this.right;
             this.right = null;
             return target;
+        }
+
+        // 尝试左递归
+        if (this.left != null) {
+            target = this.left.delete(id);
+            if (target != null) {
+                return target;
+            }
+        }
+
+        // 尝试右递归
+        if (this.right != null) {
+            target = this.right.delete(id);
+            if (target != null) {
+                return target;
+            }
+        }
+        return null;
+    }
+
+    public HeroNode deleteByQuestion(int id) {
+        // 判断左子节点是否是要删除的节点
+        HeroNode target = null;
+        if (this.left != null && this.left.no == id) {
+            target = this.left;
+            if (target.left == null && target.right == null) {
+                this.left = null;
+                return target;
+            } else if (target.left == null && target.right != null) {
+                this.right = target.right;
+                return target;
+            } else if (target.left != null && target.right == null) {
+                this.left = target.left;
+                return target;
+            } else {
+                this.left = target.left;
+                target.left.right = target.right;
+                return target;
+            }
+
+        }
+
+        if (this.right != null && this.right.no == id) {
+            target = this.right;
+            if (target.left == null && target.right == null) {
+                this.right = null;
+                return target;
+            } else if (target.left == null && target.right != null) {
+                this.right = target.right;
+                return target;
+            } else if (target.left != null && target.right == null) {
+                this.left = target.left;
+                return target;
+            } else {
+                this.right = target.left;
+                target.left.right = target.right;
+                return target;
+            }
         }
 
         // 尝试左递归
