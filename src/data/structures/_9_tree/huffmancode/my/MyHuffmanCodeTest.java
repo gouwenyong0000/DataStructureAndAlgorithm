@@ -104,10 +104,10 @@ public class MyHuffmanCodeTest {
         List<Node> nodes = buildNodes(datas);
 
         // 2. 对列表进行赫夫曼树的构建
-        Node node = createHuffmanTree(nodes);
+        Node root = createHuffmanTree(nodes);
 
         // 3. 基于赫夫曼树生成 赫夫曼编码表
-        Map<Byte, String> huffmanCodes = buildHuffmanCodes(node);
+        Map<Byte, String> huffmanCodes = buildHuffmanCodes(root);
 
         // 4. 基于赫夫曼编码表，压缩内容
         return zip(datas, huffmanCodes);
