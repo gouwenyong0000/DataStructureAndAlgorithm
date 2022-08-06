@@ -7,13 +7,12 @@ public class Hanoitower {
 
     public static void main(String[] args) {
 
-        hanoiTower(3, 'A', 'B', 'C');
+        hanoiTower(5, 'A', 'B', 'C');
     }
 
 
     /**
-     * 汉诺塔的移动的方法
-     * 使用分治算法
+     * 汉诺塔的移动的方法   使用分治算法
      *
      * @param num
      * @param a   源
