@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * 普里姆算法  村庄修路里程最短问题
+ * 最小生成树
  */
 public class PrimAlgorithm {
 
