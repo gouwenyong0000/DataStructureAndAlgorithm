@@ -17,8 +17,11 @@ public class HeapSort {
         int max = 800_0000;
 //        int max = 8;
         int[] arr = new int[max];
+        int[] arr1 = new int[max];
         for (int i = 0; i < max; i++) {
-            arr[i] = (int) (Math.random() * max);
+            int i1 = (int) (Math.random() * max);
+            arr[i] = i1;
+            arr1[i] = i1;
         }
         if (arr.length < 10) {
             System.out.println("原始数组：" + Arrays.toString(arr));
@@ -30,6 +33,16 @@ public class HeapSort {
         }
         Instant endTime = Instant.now();
         System.out.println("共耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
+
+        Arrays.sort(arr1);
+        for (int i = 0; i < max; i++) {
+
+            if (arr[i] != arr1[i]){
+
+                System.out.println("不相等" + arr[i]);
+            }
+
+        }
 
     }
 
@@ -82,13 +95,13 @@ public class HeapSort {
         //开始调整
         //说明
         //1. k = i * 2 + 1   其中 k 是 i结点的左子结点
-        for (int k = i * 2 + 1; k < length; k = k * 2 + 1) {
+        for (int k = i * 2 + 1; k < length; k = i * 2 + 1) {
             if (k + 1 < length && arr[k] < arr[k + 1]) { //说明左子结点的值小于右子结点的值
                 k++; // k 指向右子结点
             }
             if (arr[k] > temp) { //如果子结点大于父结点
                 arr[i] = arr[k]; //把较大的值赋给当前结点
-                i = k; //!!! i 指向 k,继续循环比较
+                i = k; //!!! i 指向 k,继续循环比较，【对交换后的位置进行递归归位】
             } else {
                 break;//!
             }
